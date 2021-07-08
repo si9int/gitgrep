@@ -32,7 +32,7 @@ if __name__ == '__main__':
     try:
         domain = sys.argv[1]
     except IndexError:
-        print('[X] Usage: python3 gitgrep.py <domain> <optional|-json>')
+        print('[X] Usage: python3 grepgit.py <domain> <optional|-json>')
         exit(0)
 
     first = json.loads(requests.get('https://grep.app/api/search?q=rewe.de').text)
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     fetch_data(first)
 
     for t in range(1, total+1):
-        fetch_data(json.loads(requests.get('https://grep.app/api/search?q=rewe.de&page=' + str(t)).text))
+        fetch_data(json.loads(requests.get('https://grep.app/api/search?q={a}&page={b}'.format(a=domain, b=t)).text))
 
     try:
         if sys.argv[2] == '-json':
@@ -56,4 +56,3 @@ if __name__ == '__main__':
 
         for r in RESULT['files']:
             print(r)
-            
